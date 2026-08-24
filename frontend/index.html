@@ -1,0 +1,724 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <meta
+        name="description"
+        content="Extract text and tables from images and PDF documents using AI-powered OCR."
+    >
+
+    <title>
+        Document Extractor
+    </title>
+
+    <link
+        rel="stylesheet"
+        href="/styles.css"
+    >
+
+</head>
+
+
+<body>
+
+
+<!-- =========================================================
+     Background
+========================================================= -->
+
+<div class="background-glow glow-one"></div>
+<div class="background-glow glow-two"></div>
+
+
+<!-- =========================================================
+     App
+========================================================= -->
+
+<div class="app-shell">
+
+
+    <!-- =====================================================
+         Header
+    ====================================================== -->
+
+    <header class="topbar">
+
+        <div class="brand">
+
+            <div class="brand-icon">
+
+                <svg
+                    width="22"
+                    height="22"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="2"
+                >
+
+                    <path
+                        d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"
+                    />
+
+                    <polyline
+                        points="14 2 14 8 20 8"
+                    />
+
+                    <line
+                        x1="8"
+                        y1="13"
+                        x2="16"
+                        y2="13"
+                    />
+
+                    <line
+                        x1="8"
+                        y1="17"
+                        x2="14"
+                        y2="17"
+                    />
+
+                </svg>
+
+            </div>
+
+
+            <div class="brand-text">
+
+                <span class="brand-name">
+                    
+                </span>
+
+                <span class="brand-tagline">
+                </span>
+
+            </div>
+
+        </div>
+
+
+        <div class="topbar-status">
+
+            <span class="status-dot"></span>
+
+            <span>
+            </span>
+
+        </div>
+
+    </header>
+
+
+    <!-- =====================================================
+         Main
+    ====================================================== -->
+
+    <main class="main-content">
+
+
+        <!-- =================================================
+             Hero
+        ================================================== -->
+
+        <section class="hero">
+
+            <div class="hero-badge">
+
+                <span class="sparkle">✦</span>
+
+                Powered by Signimus
+
+            </div>
+
+
+            <h1>
+
+                Turn documents into
+                <span class="gradient-text">
+                    editable data.
+                </span>
+
+            </h1>
+
+
+            <p>
+
+                Upload an image or PDF and extract
+                text, tables, and document structure
+                into professionally formatted
+                Word and Excel files.
+
+            </p>
+
+        </section>
+
+
+        <!-- =================================================
+             Main Card
+        ================================================== -->
+
+        <section class="workspace-card">
+
+
+            <!-- =============================================
+                 Upload Section
+            ============================================== -->
+
+            <div
+                id="dropZone"
+                class="drop-zone"
+            >
+
+
+                <div class="upload-visual">
+
+                    <div class="upload-icon-container">
+
+                        <svg
+                            class="upload-icon"
+                            viewBox="0 0 24 24"
+                            fill="none"
+                            stroke="currentColor"
+                            stroke-width="1.8"
+                        >
+
+                            <path
+                                d="M12 16V4"
+                            />
+
+                            <path
+                                d="M7 9l5-5 5 5"
+                            />
+
+                            <path
+                                d="M5 20h14"
+                            />
+
+                        </svg>
+
+                    </div>
+
+                </div>
+
+
+                <div class="upload-content">
+
+                    <h2>
+                        Drop your document here
+                    </h2>
+
+                    <p>
+                        Drag & drop your file or
+                        <button
+                            type="button"
+                            id="browseButton"
+                            class="browse-button"
+                        >
+                            browse files
+                        </button>
+                    </p>
+
+                    <div class="supported-formats">
+
+                        <span>JPG</span>
+                        <span>PNG</span>
+                        <span>WEBP</span>
+                        <span>TIFF</span>
+                        <span>PDF</span>
+
+                    </div>
+
+                </div>
+
+
+                <input
+                    type="file"
+                    id="fileInput"
+                    accept=".jpg,.jpeg,.png,.bmp,.webp,.tif,.tiff,.pdf"
+                    hidden
+                >
+
+            </div>
+
+
+            <!-- =============================================
+                 Selected File
+            ============================================== -->
+
+            <div
+                id="fileInfo"
+                class="file-info hidden"
+            >
+
+                <div class="file-icon">
+
+                    <svg
+                        viewBox="0 0 24 24"
+                        fill="none"
+                        stroke="currentColor"
+                        stroke-width="1.8"
+                    >
+
+                        <path
+                            d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"
+                        />
+
+                        <polyline
+                            points="14 2 14 8 20 8"
+                        />
+
+                    </svg>
+
+                </div>
+
+
+                <div class="file-details">
+
+                    <strong id="fileName">
+                        Document
+                    </strong>
+
+                    <span id="fileSize">
+                        0 KB
+                    </span>
+
+                </div>
+
+
+                <button
+                    type="button"
+                    id="removeFile"
+                    class="remove-file"
+                    aria-label="Remove file"
+                >
+
+                    ×
+
+                </button>
+
+            </div>
+
+
+            <!-- =============================================
+                 Divider
+            ============================================== -->
+
+            <div class="section-divider"></div>
+
+
+            <!-- =============================================
+                 Output Options
+            ============================================== -->
+
+            <div class="output-section">
+
+                <div class="section-heading">
+
+                    <div>
+
+                        <h3>
+                            Export format
+                        </h3>
+
+                        <p>
+                            Choose how you want your extracted
+                            content delivered.
+                        </p>
+
+                    </div>
+
+                </div>
+
+
+                <div class="format-options">
+
+
+                    <!-- Word + Excel -->
+
+                    <label
+                        class="format-card selected"
+                    >
+
+                        <input
+                            type="radio"
+                            name="outputFormat"
+                            value="both"
+                            checked
+                        >
+
+                        <div class="format-icon combined-icon">
+
+                            <span>W</span>
+                            <span>X</span>
+
+                        </div>
+
+                        <div class="format-content">
+
+                            <strong>
+                                Word + Excel
+                            </strong>
+
+                            <span>
+                                Get both formats
+                            </span>
+
+                        </div>
+
+                        <div class="radio-indicator"></div>
+
+                    </label>
+
+
+                    <!-- Word -->
+
+                    <label
+                        class="format-card"
+                    >
+
+                        <input
+                            type="radio"
+                            name="outputFormat"
+                            value="docx"
+                        >
+
+                        <div class="format-icon word-icon">
+
+                            W
+
+                        </div>
+
+                        <div class="format-content">
+
+                            <strong>
+                                Word
+                            </strong>
+
+                            <span>
+                                .docx document
+                            </span>
+
+                        </div>
+
+                        <div class="radio-indicator"></div>
+
+                    </label>
+
+
+                    <!-- Excel -->
+
+                    <label
+                        class="format-card"
+                    >
+
+                        <input
+                            type="radio"
+                            name="outputFormat"
+                            value="xlsx"
+                        >
+
+                        <div class="format-icon excel-icon">
+
+                            X
+
+                        </div>
+
+                        <div class="format-content">
+
+                            <strong>
+                                Excel
+                            </strong>
+
+                            <span>
+                                .xlsx spreadsheet
+                            </span>
+
+                        </div>
+
+                        <div class="radio-indicator"></div>
+
+                    </label>
+
+
+                </div>
+
+            </div>
+
+
+            <!-- =============================================
+                 Extract Button
+            ============================================== -->
+
+            <button
+                id="extractButton"
+                class="extract-button"
+                disabled
+            >
+
+                <span class="button-icon">
+
+                    <svg
+                        viewBox="0 0 24 24"
+                        fill="none"
+                        stroke="currentColor"
+                        stroke-width="2"
+                    >
+
+                        <path
+                            d="M12 3v12"
+                        />
+
+                        <path
+                            d="M7 10l5 5 5-5"
+                        />
+
+                        <path
+                            d="M5 21h14"
+                        />
+
+                    </svg>
+
+                </span>
+
+
+                <span class="button-text">
+                    Extract Document
+                </span>
+
+
+                <span class="button-loader"></span>
+
+            </button>
+
+
+            <!-- =============================================
+                 Status
+            ============================================== -->
+
+            <div
+                id="status"
+                class="status hidden"
+            >
+
+                <div class="status-icon"></div>
+
+                <div class="status-content">
+
+                    <strong id="statusTitle">
+                        Processing document
+                    </strong>
+
+                    <span id="statusMessage">
+                        Please wait...
+                    </span>
+
+                </div>
+
+            </div>
+
+
+            <!-- =============================================
+                 Results
+            ============================================== -->
+
+            <div
+                id="results"
+                class="results hidden"
+            ></div>
+
+
+        </section>
+
+
+        <!-- =================================================
+             Feature Cards
+        ================================================== -->
+
+        <section class="features">
+
+
+            <div class="feature">
+
+                <div class="feature-icon">
+
+                    <svg
+                        viewBox="0 0 24 24"
+                        fill="none"
+                        stroke="currentColor"
+                        stroke-width="1.8"
+                    >
+
+                        <rect
+                            x="4"
+                            y="4"
+                            width="16"
+                            height="16"
+                            rx="2"
+                        />
+
+                        <path
+                            d="M8 9h8"
+                        />
+
+                        <path
+                            d="M8 13h6"
+                        />
+
+                        <path
+                            d="M8 17h4"
+                        />
+
+                    </svg>
+
+                </div>
+
+                <div>
+
+                    <strong>
+                        Accurate OCR
+                    </strong>
+
+                    <span>
+                        Advanced text recognition
+                    </span>
+
+                </div>
+
+            </div>
+
+
+            <div class="feature">
+
+                <div class="feature-icon">
+
+                    <svg
+                        viewBox="0 0 24 24"
+                        fill="none"
+                        stroke="currentColor"
+                        stroke-width="1.8"
+                    >
+
+                        <rect
+                            x="3"
+                            y="3"
+                            width="18"
+                            height="18"
+                            rx="2"
+                        />
+
+                        <line
+                            x1="3"
+                            y1="9"
+                            x2="21"
+                            y2="9"
+                        />
+
+                        <line
+                            x1="9"
+                            y1="3"
+                            x2="9"
+                            y2="21"
+                        />
+
+                    </svg>
+
+                </div>
+
+                <div>
+
+                    <strong>
+                        Table Detection
+                    </strong>
+
+                    <span>
+                        Preserve document structure
+                    </span>
+
+                </div>
+
+            </div>
+
+
+            <div class="feature">
+
+                <div class="feature-icon">
+
+                    <svg
+                        viewBox="0 0 24 24"
+                        fill="none"
+                        stroke="currentColor"
+                        stroke-width="1.8"
+                    >
+
+                        <path
+                            d="M12 3v18"
+                        />
+
+                        <path
+                            d="M5 7h14"
+                        />
+
+                        <path
+                            d="M5 17h14"
+                        />
+
+                    </svg>
+
+                </div>
+
+                <div>
+
+                    <strong>
+                        Easy Export
+                    </strong>
+
+                    <span>
+                        Word and Excel ready
+                    </span>
+
+                </div>
+
+            </div>
+
+
+        </section>
+
+
+    </main>
+
+
+    <!-- =====================================================
+         Footer
+    ====================================================== -->
+
+    <footer class="footer">
+
+        <span>
+        </span>
+
+        <span class="footer-separator">
+            •
+        </span>
+
+        <span>
+        </span>
+
+    </footer>
+
+
+</div>
+
+
+<script src="/app.js"></script>
+
+</body>
+
+</html>
